@@ -8,13 +8,13 @@ function ondraw()
   if who == self then
     local steptarget = 8
     if lhand:step() < steptarget then
-      steptarget = lhand:step()
+      steptarget = lhand:step() - 1
       end
     if chand:step() < steptarget then
-      steptarget = chand:step()
+      steptarget = chand:step() - 1
       end
     if rhand:step() < steptarget then
-      steptarget = rhand:step()
+      steptarget = rhand:step() - 1
       end
     if steptarget < shand:step() then
       square(mount,game,who)
@@ -22,7 +22,7 @@ function ondraw()
     if shand:ready() then
       if lhand:step() >= 1 and chand:step() >= 1 and rhand:step() >= 1 then
         for _, t in ipairs(shand:effa()) do
-          mount:lighta(t, 100)
+          mount:lighta(t, 50)
           end
         end
       end
@@ -34,21 +34,21 @@ function ondraw()
         if who == self:left() and lhand:ready() then
           for _, none in ipairs(shand:effa()) do
             if none ~= t then
-              mount:lighta(t, 150)
+              mount:lighta(t, 500)
               end
             end
           end
         if who == self:cross() and chand:ready() then
           for _, none in ipairs(chand:effa()) do
             if none ~= t then
-              mount:lighta(t, 150)
+              mount:lighta(t, 500)
               end
             end
           end
         if who == self:right() and rhand:ready() then
           for _, none in ipairs(rhand:effa()) do
             if none ~= t then
-              mount:lighta(t, 150)
+              mount:lighta(t, 500)
               end
             end
           end
