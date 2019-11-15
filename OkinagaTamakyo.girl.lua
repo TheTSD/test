@@ -82,11 +82,11 @@ end
 function ondraw()
   local shand = game:gethand(self)
   local lhand = game:gethand(self:left())
-  local leftdream = Dreamhand.new(game:gethand(self:left()))
+  local leftdream = Hand.new(game:gethand(self:left()))
   local chand = game:gethand(self:cross())
-  local crossdream = Dreamhand.new(game:gethand(self:cross()))
+  local crossdream = Hand.new(game:gethand(self:cross()))
   local rhand = game:gethand(self:right())
-  local rightdream = Dreamhand.new(game:gethand(self:right()))
+  local rightdream = Hand.new(game:gethand(self:right()))
 
   if who == self then
     local river = game:getriver(self)
@@ -98,7 +98,7 @@ function ondraw()
     if who==self:left() and shand:ready() and lhand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if lhand:ct(res) > 0 then
-			leftdream = Dreamhand.new(lhand)
+			leftdream = Hand.new(lhand)
 			for _, t in ipairs(lhand:effa()) do
 				if t ~= res then
 					leftdream:swapout(res)
@@ -109,7 +109,7 @@ function ondraw()
                     if rightdream:step() > rhand:step() then
 					mount:lighta(res,50)
 				    end
-				leftdream = Dreamhand.new(lhand)
+				leftdream = Hand.new(lhand)
 			    end
 		    end
 		end
@@ -119,7 +119,7 @@ function ondraw()
     if who==self:cross() and shand:ready() and chand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if chand:ct(res) > 0 then
-			crossdream = Dreamhand.new(chand)
+			crossdream = Hand.new(chand)
 			for _, t in ipairs(chand:effa()) do
 				if t ~= res then
 					crossdream:swapout(res)
@@ -130,7 +130,7 @@ function ondraw()
                     if rightdream:step() > rhand:step() then
 					mount:lighta(res,50)
 				    end
-				crossdream = Dreamhand.new(chand)
+				crossdream = Hand.new(chand)
 			    end
 		    end
 		end
@@ -140,7 +140,7 @@ function ondraw()
     if who==self:right() and shand:ready() and rhand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if rhand:ct(res) > 0 then
-			rightdream = Dreamhand.new(rhand)
+			rightdream = Hand.new(rhand)
 			for _, t in ipairs(rhand:effa()) do
 				if t ~= res then
 					rightdream:swapout(res)
@@ -151,7 +151,7 @@ function ondraw()
                     if rightdream:step() > rhand:step() then
 					mount:lighta(res,50)
 				    end
-				rightdream = Dreamhand.new(rhand)
+				rightdream = Hand.new(rhand)
 			    end
 		    end
 		end
