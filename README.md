@@ -79,6 +79,7 @@
 
 
 ·Koromo_sideS.girl.lua
+
 天江衣（染谷飯）
 
 (大概是染谷饭版吧……）
