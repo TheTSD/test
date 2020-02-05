@@ -141,3 +141,27 @@ function ondraw()
 	end
 	
 end
+
+function ongameevent()
+  if event.type == "drawn" then
+    read(mount, game, who)
+  end
+end
+
+function read(mount, game, who)
+  local hand = game:gethand(self)
+  local lhand = game:gethand(self:left())
+  local chand = game:gethand(self:cross())
+  local rhand = game:gethand(self:right())
+  if event.args.who == self and hand:step() <= 1 and not game:riichiestablished(self) then
+    for _, t in ipairs(hand:effa()) do
+	  local i = lhand:ct(t) + chand:ct(t) + rhand:ct(t)
+	  if i == 0 then
+	    print(t,"问题なさそうです")
+	  end
+	  if i ~= 0 then
+	    print(t,"..",i,"枚は山と河の外に..")
+	  end
+	end
+  end
+end
