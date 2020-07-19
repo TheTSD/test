@@ -116,7 +116,6 @@ function ondraw()
   local rightdream = Hand.new(game:gethand(self:right()))
 
   if who == self then
-	print(keypair)
 	if firstdraw == true then
 		for _, t in ipairs(T34.all) do
 			if t ~= keypair then
