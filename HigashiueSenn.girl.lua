@@ -151,7 +151,7 @@ function ondraw()
   end
   --找出配牌,特殊密码组
 
-  if who == self and tsumokiri == true and not hand:ready() and mode == 0 then
+  if tsumokiri == true and not hand:ready() and mode == 0 then
 	tsumokiri = false
 	ryou(mount, game, who)
 	aku(mount, game, who)
