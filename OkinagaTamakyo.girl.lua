@@ -134,6 +134,11 @@ function ondraw()
     if who==self:left() and shand:ready() and lhand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if lhand:ct(res) > 0 then
+			if res == T34.new("5p") then
+			   if lhand:ct(T37.new("5p")) < 1 then
+				  res = T37.new("0p")
+			   end
+			end
 			leftdream = Hand.new(lhand)
 			for _, t in ipairs(lhand:effa()) do
 				if t ~= res then
@@ -155,6 +160,11 @@ function ondraw()
     if who==self:cross() and shand:ready() and chand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if chand:ct(res) > 0 then
+			if res == T34.new("5p") then
+			   if chand:ct(T37.new("5p")) < 1 then
+				  res = T37.new("0p")
+			   end
+			end
 			crossdream = Hand.new(chand)
 			for _, t in ipairs(chand:effa()) do
 				if t ~= res then
@@ -176,6 +186,11 @@ function ondraw()
     if who==self:right() and shand:ready() and rhand:step() < 3 then
       for _, res in ipairs(shand:effa()) do
 		if rhand:ct(res) > 0 then
+			if res == T34.new("5p") then
+			   if rhand:ct(T37.new("5p")) < 1 then
+				  res = T37.new("0p")
+			   end
+			end
 			rightdream = Hand.new(rhand)
 			for _, t in ipairs(rhand:effa()) do
 				if t ~= res then
