@@ -151,13 +151,13 @@ function ondraw()
   end
   --找出配牌,特殊密码组
 
-  if tsumokiri == true and not hand:ready() and mode == 0 then
+  if who == self and tsumokiri == true and not hand:ready() and mode == 0 then
 	tsumokiri = false
 	ryou(mount, game, who)
 	aku(mount, game, who)
   end
 
-  if mode == 1 then
+  if mode == 1 and who == self then
 	tsumokiri = false
     for _, t in ipairs(hand:effa()) do
 	  mount:lighta(t, 100)
