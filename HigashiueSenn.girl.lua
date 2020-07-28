@@ -1,33 +1,26 @@
 local mode = 0
 --默认模式
-local starthand = {}
---配牌
-local firstdraw = false
---首章判定
 local lasthand = {}
 --手牌
 local tsumokiri = false
 --自摸切判定，初始关闭
-local concut = false
---持续切判定，初始关闭
+local concut = 0
+--全局自摸切计数，初始0
+local wholeMK = 0
+--全局MK，初始值为0
 
 function ondice()
-  mode = 0
+  mode = 1
   --重置模式
-  if concut == true then
-    mode = 1
+  if concut < 30 then
+    mode = 0
     end
   --判定模式
-  if mode == 0 then
-    concut = true
-    end
-  --每局开始开启自摸切判定
   if mode == 1 then
-    print("妙法般象皆谛")
+    print("妙法般象揭谛")
+    concut = 0
     end
-  --模式1
-  firstdraw = true
-  --首章判定重置
+  --模式1，全局自模切计数清零
 end
 
 function checkinit()
@@ -140,27 +133,18 @@ function ondraw()
   local threeseven = {"1p","2p","3p","4p","5p","0p","6p","7p","8p","9p","1s","2s","3s","4s","5s","0s","6s","7s","8s","9s","1m","2m","3m","4m","5m","0m","6m","7m","8m","9m","1f","2f","3f","4f","1y","2y","3y"}
   local hand = game:gethand(self)
   local closed = hand:closed()
-  if firstdraw == true then
-    firstdraw = false
-    local count = 1
-    for _, t in ipairs(threeseven) do
-      starthand[count] = T37.new(t)
-      starthand[count+1] = closed:ct(starthand[count])
-      count = count + 2
-    end
-  end
-  --找出配牌,特殊密码组
 
+	ryou(mount, game, who)
   if tsumokiri == true and not hand:ready() and mode == 0 then
 	tsumokiri = false
-	ryou(mount, game, who)
+	wholeMK = wholeMK + 1
 	aku(mount, game, who)
   end
 
   if mode == 1 and who == self then
 	tsumokiri = false
     for _, t in ipairs(hand:effa()) do
-	  mount:lighta(t, 100)
+	  mount:lighta(t, wholeMK*5)
 	end
   end
 
@@ -172,7 +156,6 @@ function ongameevent()
   end
   if event.type == "discarded" then
     cutcare(mount, game, who)
-	password(mount, game, who)
   end
 end
 
@@ -198,28 +181,13 @@ function cutcare()
 	end
 	if case == 0 then
 	  tsumokiri = true
+	  if concut < 30 then
+	    concut = concut + 1
+	  end
 	end  
   end
 end
 
-function password()
-  local threeseven = {"1p","2p","3p","4p","5p","0p","6p","7p","8p","9p","1s","2s","3s","4s","5s","0s","6s","7s","8s","9s","1m","2m","3m","4m","5m","0m","6m","7m","8m","9m","1f","2f","3f","4f","1y","2y","3y"}
-  local thehand = game:gethand(self)
-  local closed = thehand:closed()
-  local nowhand = {}
-  local count = 1
-  for _, t in ipairs(threeseven) do
-    nowhand[count] = T37.new(t)
-    nowhand[count+1] = closed:ct(nowhand[count])
-    count = count + 2
-    end
-  --特殊密码组，持续性检查自摸切
-  for i = 1, #starthand do
-    if nowhand[i] ~= starthand[i] then
-      concut = false
-    end
-  end
-end
 
 function ryou (mount, game, who)
   
@@ -227,7 +195,6 @@ function ryou (mount, game, who)
     return
   end
 
-  local mk = 400
   local hand = game:gethand(self)
   local closed = hand:closed()
   local dream = Hand.new(hand)
@@ -299,17 +266,17 @@ function ryou (mount, game, who)
     for i = 2,8 do
       for _, suit in ipairs(suits) do
         if hand:step() >= 1 and closed:ct(T34.new(i .. suit)) == 2 and (closed:ct(T34.new(i+1 .. suit)) > 0 and closed:ct(T34.new(i-1 .. suit)) > 0) then
-          mount:lighta(T34.new(i .. suit), mk)
+          mount:lighta(T34.new(i .. suit), wholeMK*15)
           end
       end
     end
 
 --增加数量为2的中章牌的上章可能，加大良型的成率。
       
-  mount:lighta(bestpair, mk)
+  mount:lighta(bestpair, wholeMK*15)
   
   if hand:step() == 1 and bestcount >= 3 then
-    mount:lighta(bestpair, mk)
+    mount:lighta(bestpair, wholeMK*10)
     end
   end
 end
